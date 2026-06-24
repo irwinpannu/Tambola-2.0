@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambola</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="entryScreen" class="entry-screen">
+        <div class="brand-block">
+          <p class="eyebrow">Realtime Tambola</p>
+          <h1>Tambola Room</h1>
+          <p class="support-copy">Create a host room or join with a code.</p>
+        </div>
+
+        <div class="entry-grid">
+          <form id="hostForm" class="panel">
+            <h2>Host Game</h2>
+            <label>
+              Host name
+              <input id="hostName" maxlength="24" placeholder="Host" />
+            </label>
+            <label>
+              Voice mode
+              <select id="gameMode">
+                <option value="online">Online - player voice on</option>
+                <option value="silent">Silent / in-person - player voice off</option>
+              </select>
+            </label>
+            <label>
+              Tickets per player
+              <select id="ticketCount">
+                <option value="1">1 ticket</option>
+                <option value="3">3 tickets</option>
+              </select>
+            </label>
+            <button class="primary-btn" type="submit">Create Room</button>
+            <p id="hostError" class="inline-message"></p>
+          </form>
+
+          <form id="joinForm" class="panel">
+            <h2>Join Game</h2>
+            <label>
+              Player name
+              <input id="playerName" maxlength="24" placeholder="Your name" />
+            </label>
+            <label>
+              Room code
+              <input id="roomCodeInput" maxlength="8" placeholder="ABCDE" />
+            </label>
+            <button class="primary-btn" type="submit">Join Room</button>
+            <p id="joinError" class="inline-message"></p>
+          </form>
+        </div>
+      </section>
+
+      <section id="gameScreen" class="game-screen hidden">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Room</p>
+            <h1 id="roomCode">-----</h1>
+          </div>
+          <div class="status-strip">
+            <span id="roleBadge">Player</span>
+            <span id="modeBadge">Online</span>
+            <span id="stateBadge">Lobby</span>
+            <button id="hostHomeBtn" class="secondary-btn compact-action hidden">Return Home</button>
+          </div>
+        </header>
+
+        <section id="lobbyPanel" class="lobby-layout">
+          <div class="panel">
+            <h2>Players</h2>
+            <div id="playersList" class="players-list"></div>
+          </div>
+          <div id="hostLobbyControls" class="panel compact-panel hidden">
+            <h2>Host Controls</h2>
+            <button id="startGameBtn" class="primary-btn">Start Game</button>
+            <p id="hostActionMessage" class="inline-message"></p>
+          </div>
+        </section>
+
+        <section id="playPanel" class="play-layout hidden">
+          <section class="number-stage">
+            <p class="eyebrow">Current Number</p>
+            <div id="currentNumber" class="current-number">--</div>
+            <p id="numberCaption" class="number-caption">Waiting for next call</p>
+          </section>
+
+          <section id="hostControls" class="host-controls hidden">
+            <button id="nextNumberBtn" class="primary-btn">Next Number</button>
+            <button id="endGameBtn" class="danger-btn">End Game</button>
+          </section>
+
+          <section id="playerVoicePanel" class="voice-panel hidden">
+            <label class="toggle-row">
+              <input id="playerVoiceToggle" type="checkbox" />
+              Player voice announcements
+            </label>
+          </section>
+
+          <section class="board-panel">
+            <div class="section-title">
+              <h2>Called Numbers</h2>
+              <span id="calledCount">0 / 90</span>
+            </div>
+            <div id="calledNumbers" class="called-grid"></div>
+          </section>
+
+          <section class="content-grid">
+            <div class="tickets-column">
+              <div class="section-title">
+                <h2>Your Tickets</h2>
+                <span id="playerNameLabel"></span>
+              </div>
+              <div id="ticketsContainer" class="tickets-container"></div>
+              <p id="ticketMessage" class="inline-message"></p>
+            </div>
+
+            <aside class="side-column">
+              <div id="claimPanel" class="panel">
+                <h2>Claims</h2>
+                <div id="claimButtons" class="claim-buttons"></div>
+                <p id="claimMessage" class="inline-message"></p>
+              </div>
+
+              <div class="panel">
+                <h2>Live Winners</h2>
+                <div id="liveWinners" class="winners-list"></div>
+              </div>
+            </aside>
+          </section>
+        </section>
+
+        <section id="finalScreen" class="final-screen hidden">
+          <div class="section-title">
+            <h2>Final Results</h2>
+            <span>Game ended</span>
+          </div>
+          <div id="finalResults" class="final-results"></div>
+          <div class="final-actions">
+            <button id="playAgainBtn" class="primary-btn hidden">Play Again</button>
+            <button id="homeBtn" class="secondary-btn">Return Home</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="tickets.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

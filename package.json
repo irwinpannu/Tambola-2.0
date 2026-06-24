@@ -1,0 +1,14 @@
+{
+  "name": "tambola-app",
+  "version": "1.0.0",
+  "description": "Realtime Tambola game with host, player tickets, claims, scoring, and reconnect support.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}
